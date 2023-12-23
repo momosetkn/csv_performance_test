@@ -16,6 +16,8 @@ import java.time.OffsetDateTime
 class OrangeSignalExample : ICsv {
     private val csvManager = CsvManagerFactory.newCsvManager()
     override fun <E> readEach(inputStream: InputStream, block: (ITypedCsvData) -> E) {
+        // 以下エラーになり無理でした…
+        // Exception in thread "main" java.io.IOException: Cannot create com.github.momosetkn.csv.individual.OrangeSignalTypedCsvData: com.github.momosetkn.csv.individual.OrangeSignalTypedCsvData
         val list = csvManager
             .load(OrangeSignalTypedCsvData::class.java)
             .from(inputStream)
