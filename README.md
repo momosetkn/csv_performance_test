@@ -1,4 +1,8 @@
-# 実行前に確認
+## 環境構築
+
+`sdk env install`
+
+## 以下実行しておく
 
 ```bash
 sudo mkdir /mytmpfs/
