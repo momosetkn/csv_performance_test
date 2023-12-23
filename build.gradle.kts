@@ -21,12 +21,15 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.15.3")
     // https://mvnrepository.com/artifact/com.github.doyaaaaaken/kotlin-csv
     implementation("com.github.doyaaaaaken:kotlin-csv:1.9.2")
+    implementation("io.github.blackmo18:kotlin-grass-core-jvm:1.0.0")
+    implementation("io.github.blackmo18:kotlin-grass-parser-jvm:0.8.0")
     // https://mvnrepository.com/artifact/com.opencsv/opencsv
     implementation("com.opencsv:opencsv:5.9")
     // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
     implementation("org.apache.commons:commons-csv:1.10.0")
     implementation(kotlin("reflect"))
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.21")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
 }
 
 tasks.test {

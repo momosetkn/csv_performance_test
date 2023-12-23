@@ -1,6 +1,5 @@
 package com.github.momosetkn.csv.individual
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.momosetkn.com.github.momosetkn.csv.ICsv
 import com.github.momosetkn.com.github.momosetkn.csv.ITypedCsvData
 import com.orangesignal.csv.annotation.CsvColumn
@@ -15,7 +14,7 @@ import java.time.OffsetDateTime
 
 class OrangeSignalExample : ICsv {
     private val csvManager = CsvManagerFactory.newCsvManager()
-    override fun <E> readEach(inputStream: InputStream, block: (ITypedCsvData) -> E) {
+    override fun readEach(inputStream: InputStream, block: (ITypedCsvData) -> Unit) {
         // 以下エラーになり無理でした…
         // Exception in thread "main" java.io.IOException: Cannot create com.github.momosetkn.csv.individual.OrangeSignalTypedCsvData: com.github.momosetkn.csv.individual.OrangeSignalTypedCsvData
         val list = csvManager
@@ -26,9 +25,9 @@ class OrangeSignalExample : ICsv {
         }
     }
 
-    override fun <E> writeEach(outputStream: OutputStream, inputIterator: Iterator<E>, block: (E) -> ITypedCsvData) {
+    override fun <E : ITypedCsvData> writeEach(outputStream: OutputStream, inputIterator: Iterator<E>) {
         val list = inputIterator.asSequence().map {
-            block(it).copyToOther(OrangeSignalTypedCsvData::class)
+            it.copyToOther(OrangeSignalTypedCsvData::class)
         }.toList()
         csvManager
             .save(list, OrangeSignalTypedCsvData::class.java)

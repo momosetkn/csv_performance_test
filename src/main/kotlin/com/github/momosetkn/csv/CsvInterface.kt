@@ -10,8 +10,8 @@ import kotlin.reflect.full.memberProperties
 
 
 interface ICsv {
-    fun <E> readEach(inputStream: InputStream, block: (ITypedCsvData) -> E)
-    fun <E> writeEach(outputStream: OutputStream, inputIterator: Iterator<E>, block: (E) -> ITypedCsvData)
+    fun readEach(inputStream: InputStream, block: (ITypedCsvData) -> Unit)
+    fun <E: ITypedCsvData> writeEach(outputStream: OutputStream, inputIterator: Iterator<E>)
 }
 
 interface ITypedCsvData {

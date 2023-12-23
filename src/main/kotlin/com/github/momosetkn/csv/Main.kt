@@ -5,7 +5,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
-const val COUNT = 1_000_000
+const val COUNT = 100_000
 
 fun main(vararg args: String) {
     val readWriterType = args[0]
@@ -34,9 +34,7 @@ fun write(csvLib: CsvLibraryType) {
     val ite = generateSequence { GenerateData.testTypedCsvData() }.take(COUNT)
     val file = File(DIRECTORY).resolve("${csvLib.name}.csv")
     csvReaderFactory(csvLib)
-        .writeEach(FileOutputStream(file), ite.iterator()) {
-            it
-        }
+        .writeEach(FileOutputStream(file), ite.iterator())
 }
 
 const val DIRECTORY = "/mytmpfs/"
