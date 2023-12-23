@@ -30,6 +30,7 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.21")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug:1.8.0-RC2")
 }
 
 tasks.test {

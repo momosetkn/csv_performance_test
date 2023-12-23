@@ -31,66 +31,82 @@ object GenerateData {
         } as T
     }
 
-    fun testStringValue(length: Int): String {
-        return repeat(length) {
-            testChar()
-        }.toString()
+    fun testStringValue(cnt: Int): String {
+        val length = stringLength(cnt)
+        val stringBuilder = StringBuilder(length)
+        repeat(length) {
+            stringBuilder.append(testChar())
+        }
+
+        return stringBuilder.toString()
+    }
+
+    private fun stringLength(length: Int): Int {
+        var result = 0
+        repeat(length) {
+            if (result == 0) {
+                result = 1
+            } else {
+                result *= 10
+            }
+        }
+        return result
     }
 
     fun testChar(): Char {
-        val ascii = (32..126).random()
-        return ascii.toChar()
+        val alphabet = ('a'..'z') + ('A'..'Z')
+        return alphabet.random()
     }
 
     fun testTypedCsvData(): TypedCsvData {
-       return TypedCsvData(
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-           testValue(),
-       )
+        return TypedCsvData(
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+            testValue(),
+        )
     }
 }
 

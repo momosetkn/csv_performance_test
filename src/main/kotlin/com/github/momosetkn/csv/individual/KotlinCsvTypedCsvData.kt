@@ -5,8 +5,6 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import com.github.momosetkn.com.github.momosetkn.csv.ICsv
 import com.github.momosetkn.com.github.momosetkn.csv.ITypedCsvData
 import io.blackmo18.kotlin.grass.dsl.grass
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 import java.io.InputStream
 import java.io.OutputStream
@@ -17,21 +15,12 @@ import java.time.OffsetDateTime
 class KotlinCsvExample : ICsv {
     @OptIn(ExperimentalStdlibApi::class)
     override fun readEach(inputStream: InputStream, block: (ITypedCsvData) -> Unit) {
-//        val csvContents = csvReader()
-//            .readAllWithHeader(inputStream)
+        val csvContents = csvReader()
+            .readAllWithHeader(inputStream)
 
-//        val dataClasses = grassParser.harvest(csvContents)
-////        dataClasses.forEach {
-////            block(it)
-////        }
-        runBlocking {
-            csvReader().openAsync(inputStream) {
-                val data = readAllWithHeaderAsSequence().asFlow()
-                val dataClasses = grassParser.harvest(data)
-                dataClasses.onEach {
-                    block(it)
-                }
-            }
+        val dataClasses = grassParser.harvest(csvContents)
+        dataClasses.forEach {
+            block(it)
         }
     }
 
@@ -111,6 +100,12 @@ data class KotlinCsvTypedCsvData(
 
 @OptIn(ExperimentalStdlibApi::class)
 val grassParser = grass<KotlinCsvTypedCsvData> {
+    dateFormat = "yyyy-MM-dd"
+    timeFormat = "HH:mm:ss"
+    dateTimeSeparator = "T"
+    // where is Java8DateTime?
+//    customDataTypes = arrayListOf(Java8DateTime)v2
+
     customKeyMapDataProperty = mapOf(
         "propertyInt0" to KotlinCsvTypedCsvData::propertyInt0,
         "propertyInt1" to KotlinCsvTypedCsvData::propertyInt1,
