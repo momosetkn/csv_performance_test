@@ -4,6 +4,9 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import com.github.momosetkn.com.github.momosetkn.csv.ICsv
 import com.github.momosetkn.com.github.momosetkn.csv.ITypedCsvData
+import io.blackmo18.kotlin.grass.core.CustomDataTypes
+import io.blackmo18.kotlin.grass.core.DataTypes
+import io.blackmo18.kotlin.grass.date.time.Java8DateTime
 import io.blackmo18.kotlin.grass.dsl.grass
 import kotlinx.coroutines.runBlocking
 import java.io.InputStream
@@ -11,6 +14,9 @@ import java.io.OutputStream
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
+import java.time.OffsetTime
+import kotlin.reflect.KType
+import kotlin.reflect.typeOf
 
 class KotlinCsvExample : ICsv {
     @OptIn(ExperimentalStdlibApi::class)
@@ -98,13 +104,21 @@ data class KotlinCsvTypedCsvData(
 ) : ITypedCsvData
 
 
+object StringConv : DataTypes {
+    private val formatString = fun(value: String): Any? = value
+    override val mapTypes: Map<KType, (String) -> Any?>
+        get() = mapOf(typeOf<String>() to formatString)
+}
+
 @OptIn(ExperimentalStdlibApi::class)
 val grassParser = grass<KotlinCsvTypedCsvData> {
     dateFormat = "yyyy-MM-dd"
     timeFormat = "HH:mm:ss"
-    dateTimeSeparator = "T"
+    dateTimeSeparator = "'T'"
     // where is Java8DateTime?
-//    customDataTypes = arrayListOf(Java8DateTime)v2
+    customDataTypes = arrayListOf(Java8DateTime, Java8OffsetDateTime)
+
+    CustomDataTypes.addDataTypes(StringConv)
 
     customKeyMapDataProperty = mapOf(
         "propertyInt0" to KotlinCsvTypedCsvData::propertyInt0,
@@ -153,5 +167,24 @@ val grassParser = grass<KotlinCsvTypedCsvData> {
         "localDateTime1" to KotlinCsvTypedCsvData::localDateTime1,
         "OffsetDateTime0" to KotlinCsvTypedCsvData::offsetDateTime0,
         "OffsetDateTime1" to KotlinCsvTypedCsvData::offsetDateTime1,
+    )
+}
+
+
+object Java8OffsetDateTime : io.blackmo18.kotlin.grass.core.DataTypes {
+     val formatDateTime = fun(value: String): Any? {
+        return OffsetDateTime.parse(value)
+    }
+
+     val formatTime = fun(value: String): Any? {
+        return OffsetTime.parse(value)
+    }
+
+    override val mapTypes = mapOf(
+        typeOf<OffsetDateTime>() to formatDateTime,
+        typeOf<OffsetTime>() to formatTime,
+        //-- nullable types
+        typeOf<OffsetDateTime?>() to formatDateTime,
+        typeOf<OffsetTime?>() to formatTime
     )
 }

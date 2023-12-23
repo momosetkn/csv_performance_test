@@ -23,6 +23,7 @@ dependencies {
     implementation("com.github.doyaaaaaken:kotlin-csv:1.9.2")
     implementation("io.github.blackmo18:kotlin-grass-core-jvm:1.0.0")
     implementation("io.github.blackmo18:kotlin-grass-parser-jvm:0.8.0")
+    implementation("io.github.blackmo18:kotlin-grass-date-time-jvm:0.8.0")
     // https://mvnrepository.com/artifact/com.opencsv/opencsv
     implementation("com.opencsv:opencsv:5.9")
     // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
